@@ -15,6 +15,7 @@ const getAllBlogs = asyncHandler(async (req: Request, res: Response) => {
 const createBlog = asyncHandler(async (req: Request, res: Response) => {
     let { title, description, author, pic } = req.body;
     title = capitalizeString(title);
+    author = capitalizeString(author);
     if (!title || !description || !author) {
         res.status(400);
         throw new Error("Please fill all the fields");
