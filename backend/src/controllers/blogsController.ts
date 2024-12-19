@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 import { Request, Response } from 'express';
 import Blog from "../models/Blogs";
-
+import capitalizeString from "../utils/textCapitalize";
 const getAllBlogs = asyncHandler(async (req: Request, res: Response) => {
     try {
         const blogs = await Blog.findAll();
@@ -13,13 +13,13 @@ const getAllBlogs = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const createBlog = asyncHandler(async (req: Request, res: Response) => {
-    const { title, description, author, pic } = req.body;
-
+    let { title, description, author, pic } = req.body;
+    title = capitalizeString(title);
     if (!title || !description || !author) {
-        res.status(400).json({ message: "Please fill all the fields" });
-        return;
+        res.status(400);
+        throw new Error("Please fill all the fields");
     }
-    
+
 
     const blogData = {
         title: title as string,
@@ -38,7 +38,7 @@ const getBlog = asyncHandler(async (req: Request, res: Response) => {
     if (blog) {
         res.status(200).json(blog);
     } else {
-        res.status(404).json({status:"Error", message: "Blog not found" });
+        res.status(404).json({ status: "Error", message: "Blog not found" });
         throw new Error("Blog not found");
     }
 });
@@ -58,15 +58,15 @@ const updateBlog = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-const deleteBlog = asyncHandler(async (req:Request,res:Response)=>{
+const deleteBlog = asyncHandler(async (req: Request, res: Response) => {
     const blog = await Blog.findByPk(req.params.id);
-    try{
-        if(blog){
+    try {
+        if (blog) {
             await blog.destroy();
-            res.status(200).json({message:'Blog deleted successfully'});
+            res.status(200).json({ message: 'Blog deleted successfully' });
         }
-    }catch(err:any){
-        res.status(404).json({message:err.message});
+    } catch (err: any) {
+        res.status(404).json({ message: err.message });
     }
 
 })
@@ -74,4 +74,4 @@ const deleteBlog = asyncHandler(async (req:Request,res:Response)=>{
 
 
 
-module.exports = { getAllBlogs, createBlog,getBlog,deleteBlog,updateBlog };
+module.exports = { getAllBlogs, createBlog, getBlog, deleteBlog, updateBlog };
