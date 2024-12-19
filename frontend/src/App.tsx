@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
+import { Navigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import BlogPage from "./pages/BlogPage";
 import Footer from "./components/Footer";
-import CreateBlog from "./pages/CreateUpdate";
+import About from "./pages/About";
+import CreateBlog from "./pages/CreatePage";
 function App() {
     return (
         <div className="min-h-screen flex flex-col">
@@ -15,7 +16,8 @@ function App() {
                     <Route path="/blog" element={<BlogPage />} />
                     <Route path="/blog/:id" element={<BlogPage />} />
                     <Route path="/create" element={<CreateBlog />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="/about" element={<About/>} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </div>
             <Footer />

@@ -1,11 +1,12 @@
 import classNames from "classnames";
 import { FaFeatherAlt } from "react-icons/fa";
 import { NavLink, Link } from "react-router-dom";
+import Button from "./resuable/Button";
 
 function NavBar() {
     const links = classNames(
-        "flex gap-2 font-semibold text-md justify-center items-center",
-        "sm:gap-5",
+        "hidden sm:flex gap-2 font-semibold text-sm justify-center items-center", 
+        "sm:gap-5 sm:text-md",
         "md:gap-8"
     );
     return (
@@ -14,14 +15,15 @@ function NavBar() {
                 <FaFeatherAlt className="text-2xl" />
                 <h1 className="text-2xl font-bold">BlogSpace</h1>
             </Link>
-            <div className={links}>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/about">About</NavLink>
-                <NavLink to="/contact">Contact</NavLink>
+            <div className="flex items-center justify-center">
+                <div className={links}>
+                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/about">About</NavLink>
+                </div>
                 <Link to={"/create"}>
-                    <button className="bg-orange-600 text-white px-4 py-2 rounded-md  ml-4">
+                    <Button primary>
                         Create Blog
-                    </button>
+                    </Button>
                 </Link>
             </div>
         </div>

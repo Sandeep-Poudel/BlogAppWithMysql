@@ -2,6 +2,7 @@ import Card from "../components/Card";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import CardSkeleton from "../components/resuable/CardSkeleton";
 import { useEffect, useState } from "react";
 
 function Home() {
@@ -20,6 +21,7 @@ function Home() {
     const getPosts = async () => {
         try {
             setLoading(true);
+            await new Promise((resolve) => setTimeout(resolve, 800)); // Delay for 1 second
             const response = await axios.get("http://localhost:3000/api/blogs");
             setPosts(response.data);
             setLoading(false);
@@ -33,11 +35,10 @@ function Home() {
         getPosts();
     }, []);
 
-    const renderPosts = posts.map((post, index) => {
+    const renderPosts = posts.map((post) => {
         return (
-            <Link to={`/blog/${post.id}`}>
+            <Link to={`/blog/${post.id}`} key={post.id}>
                 <Card
-                    key={index}
                     title={post.title}
                     description={post.description}
                     author={post.author}
@@ -50,7 +51,6 @@ function Home() {
 
     const outerDiv = classNames(
         "bg-verydark mx-[2rem] justify-center flex h-full ",
-
         "lg:mx-[3rem]"
     );
 
@@ -64,7 +64,23 @@ function Home() {
 
     return (
         <div className={outerDiv}>
-            <div className={innerDiv}>{renderPosts}</div>
+            <div className={innerDiv}>
+                {loading ? (
+                    <CardSkeleton />
+                ) : posts.length > 0 ? (
+                    renderPosts
+                ) : (
+                    <div className="flex flex-col gap-4 h-full w-full items-center justify-center">
+                        <h1 className="text-3xl font-semibold text-center">
+                            <span className="text-2xl">No posts found</span>
+                            <br />
+                            <span className="text-lg">
+                                Try creating a new post
+                            </span>
+                        </h1>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
