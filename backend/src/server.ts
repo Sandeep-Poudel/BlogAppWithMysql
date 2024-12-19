@@ -13,7 +13,7 @@ app.use(express.json());
 const port = 3000;
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Hello aksdjfWorld!");
+    res.send("Hello world!");
 });
 
 app.use('/api/', blogRoutes);

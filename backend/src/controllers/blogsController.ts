@@ -5,6 +5,7 @@ import Blog from "../models/Blogs";
 const getAllBlogs = asyncHandler(async (req: Request, res: Response) => {
     try {
         const blogs = await Blog.findAll();
+
         res.status(200).json(blogs);
     } catch (err: any) {
         res.status(404).json({ message: err.message });
@@ -15,16 +16,16 @@ const createBlog = asyncHandler(async (req: Request, res: Response) => {
     const { title, description, author, pic } = req.body;
 
     if (!title || !description || !author) {
-        res.status(400);
-        throw new Error("Please fill all the fields");
+        res.status(400).json({ message: "Please fill all the fields" });
         return;
     }
+    
 
     const blogData = {
         title: title as string,
         description: description as string,
         author: author as string,
-        pic: pic || `https://picsum.photos/600/400?seed=${Math.random() * 100 + 1}`,
+        pic: pic || `https://picsum.photos/seed/${Math.floor(Math.random() * 10000 + 1)}/600/400`,
     };
 
     const blog = await Blog.create(blogData);
@@ -37,7 +38,7 @@ const getBlog = asyncHandler(async (req: Request, res: Response) => {
     if (blog) {
         res.status(200).json(blog);
     } else {
-        res.status(404);
+        res.status(404).json({status:"Error", message: "Blog not found" });
         throw new Error("Blog not found");
     }
 });
