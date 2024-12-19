@@ -34,7 +34,7 @@ function CreateBlog() {
             const response = await axios.post(
                 "http://localhost:3000/api/blogs",
                 {
-                    title,
+                    title:title.trim(),
                     author,
                     description,
                 },
@@ -85,7 +85,7 @@ function CreateBlog() {
                 <h3 className="text-3xl font-semibold leading-[1.1rem] mb-6">
                     Create
                 </h3>
-                <form className={formStyles}>
+                <form className={formStyles} onSubmit={createPost}>
                     <div className={formItems}>
                         <label htmlFor="title" className="text-gray-300">
                             Title

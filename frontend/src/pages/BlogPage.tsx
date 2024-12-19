@@ -89,7 +89,7 @@ function BlogPage() {
     return (
         <div className={container}>
             {error ? (
-                <h1 className="text-3xl">Error fetching post</h1>
+                <h1 className="text-3xl">Error fetching Blog.</h1>
             ) : (
                 <>
                     <>

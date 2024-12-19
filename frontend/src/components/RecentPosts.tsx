@@ -9,9 +9,8 @@ function RecentPosts() {
         <div className={outerDiv}>
             <div className="text-lg font-bold flex-1">Related blogs</div>
             <div className="flex flex-col">
-                <Link to={""}> THe namepasldjf</Link>
-                <Link to={""}> THe namepasldjf</Link>
-                <Link to={""}> THe namepasldjf</Link>
+                <Link to={""}> Link to a blog post</Link>
+                
             </div>
         </div>
     );
